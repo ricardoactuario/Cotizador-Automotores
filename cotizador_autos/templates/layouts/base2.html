@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Seguros de autos el salvador, seguros de automóviles, seguro para carros, seguros de autos, seguros el salvador, seguros atlantida el salvador, Seguros SV, Seguros en español, asegurados atlantida" >
+    <link rel="shortcut icon" type="image/png" href="{% static 'atlan.ico' %}">
+    <link rel="stylesheet" href="{% static 'formato.css' %}">
+    <title>Cotizadores</title>
+</head>
+<body>
+    <div id="contenedor">
+        <div class="barra">
+            <a id="inicio" href="https://www.segurosatlantida.com.sv/index">Volver a Inicio</a>
+        </div>
+        <div id="socialnet">
+            <a id="red1" href="https://www.instagram.com/segurosatlantidasv/" target="_blank"><img class="redees" src="{% static 'instagram.PNG' %}" alt="direccionainstagram"></a>
+            <a id="red2" href="https://www.linkedin.com/company/seguros-atlantida-s-a/" target="_blank"><img class="redees" src="{% static 'linkedin.PNG' %}" alt="direccionalinkedin"></a>
+            <a id="red3" href="https://www.facebook.com/atlantidasv" target="_blank"><img class="redees" src="{% static 'facebook.PNG' %}" alt="direccionafacebook"></a>
+        </div>
+        <div id="socialnet2">
+            <a id="social1" href="https://www.instagram.com/segurosatlantidasv/" target="_blank"><img id="sociales1" src="{% static 'instagram2.png' %}" alt="picinstagram"></a>
+            <a id="social2" href="https://www.linkedin.com/company/seguros-atlantida-s-a/" target="_blank"><img id="sociales2" src="{% static 'linkedin2.png' %}" alt="piclinkedin"></a>
+            <a id="social3" href="https://www.facebook.com/atlantidasv" target="_blank"><img id="sociales3" src="{% static 'facebook2.png' %}" alt="picfacebook"></a>
+        </div>
+    </div>
+    <div>
+        {% block content %}
+        {% endblock %}
+    </div>
+<div id="c-footer">
+    <div id="Contacto">
+        <p>Centro de Contacto</p>
+    </div>
+    <div id="diseño">
+        <div id="imagen1">
+            <img src="{% static 'logosatlan.PNG' %}" alt="">
+        </div>
+        <div id="imagen2">
+            <p>
+                <img src="{% static 'reloj.PNG' %}" alt="">Horario de Atención
+            </p>
+            <p>Lunes a viernes</p>
+            <p>8:00 a 5:00 pm</p>
+        </div>
+        <div id="imagen3">
+            <p>
+                <img src="{% static 'telefono.PNG' %}" alt="">Telefono:
+            </p>
+            <p>(+503)2283-0800</p>
+        </div>
+        <div id="imagen4">
+            <p>
+                <img src="{% static 'mail.PNG' %}" alt="">Correo Electrónico:
+            </p>
+            <span>aseguradoatlantida@seatlan.sv</span>
+            <p id="super"><a href="https://ssf.gob.sv/registro-publico/intermediarios-de-seguros/" target="_blank" id="enlacesuper">Superintendencia del Sistema Financiero</a></p>
+        </div>
+        <div id="imagen5">
+            <p>
+                <img src="{% static 'ubicacion.PNG' %}" alt="">Ubicación:
+            </p>
+            <p>Calle La Mascota #930, Colonia Maquilishuat, San Salvador</p>
+        </div>
+        <div id="linea">
+            <hr class="lineadivisora1" >
+        </div>
+        <div id="imagen6">
+            <a href="https://www.segurosatlantida.com.sv/contactanos" target="_blank"><img id="ayuda" src="{% static 'Necesitas ayuda.PNG' %}" alt="Botón de Ayuda"></a>
+            <a href="https://www.instagram.com/segurosatlantidasv/" target="_blank"><img class="redes" src="{% static 'instagram.PNG' %}" alt="direccionainstagram"></a>
+            <a href="https://www.linkedin.com/company/seguros-atlantida-s-a/" target="_blank"><img class="redes" src="{% static 'linkedin.PNG' %}" alt="direccionalinkedin"></a>
+            <a href="https://www.facebook.com/atlantidasv" target="_blank"><img class="redes" src="{% static 'facebook.PNG' %}" alt="direccionafacebook"></a>
+        </div>
+        
+        <p id="texto_ultimo">
+            Si tiene una denuncia o inconformidad puede contactarnos por teléfono, correo electrónico o presentarse personalmente a nuestras oficinas en horario de atención. El tiempo estimado de respuesta son 3 días hábiles
+        </p>
+    </div>
+</div>
+</body>
+</html>

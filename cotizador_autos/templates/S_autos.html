@@ -1,0 +1,235 @@
+{% extends 'layouts/base2.html' %}
+
+{% load static %}
+
+
+{% block content %}
+<div id="seccion1">
+    <div id="parte1">
+        <div id="contenedorprincipal">
+            <img id="imagenSeguroTAR" src="{% static 'STAR.png' %}" alt="imagenSTAR">
+            <h3 id="titleimg">Seguro de Automotores</h3>
+            <div id="recip1">
+                <p class="recipiente1">El seguro de automotores brinda protección integral para vehículos de uso familiar o personal, cubriendo daños causados por accidentes, choques o colisiones, incendios y robos. Además, se incluyen coberturas como Responsabilidad Civil hacia terceros en bienes y personas, Responsabilidad Civil en exceso, Gastos Médicos y Funerarios, cobertura de Incapacidad Temporal y Permanente, entre otras, así también múltiples asistencias adicionales. La variedad de las coberturas y beneficios dependerá del plan que elija.</p>
+            </div>
+            <div id="recip3">
+                <h2 id="cob">Planes:</h2>
+                <div class="recipe2">
+                    <li class="subrecipe2">Full Cover</li>
+                    <li class="subrecipe2">Auto Rentable</li>
+                    <li class="subrecipe2">Básico</li>
+                    <li class="subrecipe2">Responsabilidad Civil</li>
+                </div>
+            </div>
+        </div>
+        <div id="hd">
+            <div>
+                <img id="igm" src="{% static 'satlan.png' %}" alt="imagensatlan">
+            </div>
+            <form id="fm" method="POST">
+                {% csrf_token %}
+                <h2 id="texto">Llenar los campos de Intermediario, si aplica:</h2>
+                <div id="form1">{{form_intermediario2}}</div>
+                <h2 id="texto2">Llenar los datos para la cotización:</h2>
+                <div id="form2">{{form_CotizadorTAR}}</div>
+                <h2 id="texto3">Si el vehículo posee blindaje, favor colocar el valor del mismo:</h2>
+                <div id="form3">{{form_Blindaje}}</div>
+                <button id="boton1">
+                    Cotizar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- Al final del archivo HTML -->
+<script src="{% static 'jquery-3.7.1.min.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        console.log('Prueba1')
+        $('#id_Marc').change(function() {
+            console.log('Prueba2')
+            var selectedMarca = $(this).val();
+            console.log('Prueba3')
+            $.ajax({
+                url: "{% url 'SA' %}",
+            
+                data: { 
+                    'marca': selectedMarca,
+                },
+
+                dataType: 'json',  
+                success: function(data) {
+                    console.log('Prueba4')
+                    var modelos_select = $('#id_Model');
+                    modelos_select.empty();
+                    modelos_select.append($('<option></option>').attr('value', '').text('Seleccione el modelo'));   
+                    $.each(data.modelos, function(key, value) {
+                        modelos_select.append($('<option></option>').attr('value', value).text(value));
+                    });
+                    console.log('Prueba5')
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error en la solicitud AJAX", error);
+                }
+            });
+        });
+        $('#id_Model').change(function() {
+            var selectedModelo = $(this).val();
+            if (selectedModelo === '') {
+                $('#mensaje_modelo').text('Seleccione el modelo').addClass('mensaje-error');
+            } else {
+                $('#mensaje_modelo').text('').removeClass('mensaje-error');
+            }
+        });
+    });
+</script>
+<script src="{% static 'jquery-3.7.1.min.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        console.log('Prove0')
+        $('#id_Agen').change(function() {
+            console.log('Prove1')
+            var selectedAgen = $(this).val();
+            console.log('Prove2')
+            $.ajax({
+                url: "{% url 'SA' %}",
+                data: {
+                    'Agencia': selectedAgen,
+                },
+                dataType: 'json',
+                success: function(data) {
+                    console.log('Prove5')
+                    var años_select = $('#id_Año');
+                    años_select.empty();
+                    $.each(data.años, function(key, value) {
+                        años_select.append($('<option></option>').attr('value', value).text(value));
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error en la solicitud AJAX", error);
+                }
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('fm').addEventListener('submit', function (event) {
+            if (!validarDatos()) {
+                event.preventDefault();
+                alert('Ingresaste un dato que no es válido, por favor revisa los campos.');
+            }
+        });
+
+        function validarDatos() {
+            var sum = document.getElementById('id_Sum').dataset.realValue;
+            var sum2 = document.getElementById('id_Blind').dataset.realValue;
+
+            // Verificar si el campo Sum está vacío o no es un número válido
+            if (!esNumeroValido(sum)) {
+                return false;
+            }
+            
+            return true;
+        }
+         // Si el campo Sum2 está vacío, retornar true
+         
+        function esNumeroValido(numero) {
+            var parsedNumero = parseFloat(numero);
+            return !isNaN(parsedNumero) && isFinite(parsedNumero) && (1 <= parsedNumero && parsedNumero <= 115000);
+        }    
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var sumInput = document.getElementById('id_Sum');
+
+        sumInput.addEventListener('input', function() {
+        // Obtener el valor actual del campo y eliminar cualquier caracter no numérico
+            var value = this.value.replace(/[^\d.]/g, '');
+
+        // Si hay más de un punto decimal, eliminar los adicionales
+            var parts = value.split('.');
+            if (parts.length > 2) {
+                parts = [parts.shift(), parts.join('.')];
+            }
+
+        // Formatear la parte entera como dólar
+            var integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+        // Si hay parte decimal, añadir la parte decimal formateada
+            var formattedValue = (parts.length === 2) ? '$' + integerPart + '.' + parts[1] : '$' + integerPart;
+
+        // Asignar el valor formateado de vuelta al campo visualmente
+            this.value = formattedValue;
+
+        // Actualizar el valor real del campo sin el símbolo de dólar ni las comas de separación
+        // Esto es necesario para que las validaciones en el primer script funcionen correctamente
+            this.dataset.realValue = value;
+        });
+        document.getElementById('fm').addEventListener('submit', function() {
+            var sumInput = document.getElementById('id_Sum');
+            var realValue = sumInput.dataset.realValue;
+
+    // Asignar el valor real al campo antes de enviar el formulario
+            sumInput.value = realValue;
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var sumInput = document.getElementById('id_Blind');
+
+        sumInput.addEventListener('input', function() {
+        // Obtener el valor actual del campo y eliminar cualquier caracter no numérico
+            var value = this.value.replace(/[^\d.]/g, '');
+
+        // Si hay más de un punto decimal, eliminar los adicionales
+            var parts = value.split('.');
+            if (parts.length > 2) {
+                parts = [parts.shift(), parts.join('.')];
+            }
+
+        // Formatear la parte entera como dólar
+            var integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+        // Si hay parte decimal, añadir la parte decimal formateada
+            var formattedValue = (parts.length === 2) ? '$' + integerPart + '.' + parts[1] : '$' + integerPart;
+
+        // Asignar el valor formateado de vuelta al campo visualmente
+            this.value = formattedValue;
+
+        // Actualizar el valor real del campo sin el símbolo de dólar ni las comas de separación
+        // Esto es necesario para que las validaciones en el primer script funcionen correctamente
+            this.dataset.realValue = value;
+        });
+        document.getElementById('fm').addEventListener('submit', function() {
+            var sumInput = document.getElementById('id_Blind');
+            var realValue = sumInput.dataset.realValue;
+
+    // Asignar el valor real al campo antes de enviar el formulario
+            sumInput.value = realValue;
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('fm').addEventListener('submit', function (event) {
+            if (!validacion()) {
+                event.preventDefault();
+                alert('Seleccione un modelo válido');
+            }
+        });
+
+        function validacion() {
+            var modelo = document.getElementById('id_Model');
+
+            if (modelo.value === "" || modelo.value === "Seleccione el modelo") {
+                return false;
+            }
+            return true;
+        }
+    });
+</script>
+{% endblock %}

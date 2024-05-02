@@ -1,0 +1,22 @@
+{% extends 'layouts/base2.html' %}
+
+{% load static %}
+
+{% block content %}
+<div id="section_oferta">
+    <!-- Contenido de la oferta con variables de Django -->
+    <h1 id="titulo_cotizacion" >Se ha realizado su cotización de manera exitosa</h1>
+    <img id="imgn1" src="{% static 'check.png' %}" alt="imgcheck">
+    <h3 id="subtitulo_cotizacion">Presentamos nuestra oferta del Seguro de Automotores de acuerdo a sus datos:</h3>
+    <embed id="pdfViewer" src="data:application/pdf;base64,{{pdf_base64}}" type="application/pdf">
+    <h3 id="formulario_subtitulo2">Hemos enviado un correo con la presente cotización. Cualquier duda o consulta, puedes contactarnos a traves de nuestros medios, será un gusto atenderte</h3>
+    <h2 id="email">Correo: aseguradoatlantida@seatlan.sv</h2>
+    <h2 id="telefo">Tel: 2283-0000</h2>
+    <hr id="linea2">
+    <h3 id="formulario_subtitulo3">Envíanos tus consultas y comentarios:</h3>
+    <img id="imgformulario" src="{% static 'formulario.png' %}" alt="iconoformulario">
+    <div id="formulario">
+        <a href="https://www.segurosatlantida.com.sv/contactanos" target="_blank"><button id="botonformulario">Consultas</button></a>
+    </div>
+</div>
+{% endblock %}
